@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seller's Net Proceeds Estimate · Evergreen &amp; Grace</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root{
+  --bone:#E7EBEE; --paper:#F8FAFB; --paper-2:#EEF2F5;
+  --ink:#222A31; --ink-2:#36414A; --cream:#E4E9ED;
+  --body:#2C353C; --stone:#74808A; --stone-soft:#97A2AB;
+  --line:#D3DAE0; --line-soft:#E1E6EA;
+  --ochre:#4E7396; --ochre-deep:#3C5C7C; --rust:#B05A4A;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bone);color:var(--body);line-height:1.55;-webkit-font-smoothing:antialiased}
+.serif{font-family:'Spectral',Georgia,serif}
+.num{font-variant-numeric:tabular-nums}
+
+.sheet{max-width:1060px;margin:0 auto;padding:30px 26px 60px;animation:fade .7s ease both}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.sheet{animation:none}}
+
+.masthead{background:var(--ink);border-radius:4px;padding:18px 24px;text-align:center;position:relative}
+.masthead::after{content:"";position:absolute;left:24px;right:24px;bottom:11px;height:1px;background:rgba(78,115,150,.5)}
+.mast-mono{width:34px;height:34px;border-radius:50%;border:1px solid var(--ochre);display:inline-flex;align-items:center;justify-content:center;margin-bottom:10px}
+.mast-mono span{font-family:'Spectral',serif;font-weight:600;font-size:14px;color:var(--ochre)}
+.mast-name{font-size:13px;letter-spacing:.34em;text-transform:uppercase;color:var(--cream);font-weight:500;padding-bottom:9px}
+
+.subhead{text-align:center;padding:18px 0 0}
+.agent-name{font-family:'Spectral',serif;font-weight:500;font-size:25px;color:var(--ink);line-height:1.1}
+.agent-line{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--stone);margin-top:7px}
+.agent-line .dot{color:var(--ochre);margin:0 7px}
+
+.doc-head{text-align:center;margin:20px 0 18px;padding-top:18px;border-top:1px solid var(--line)}
+.doc-head .ribbon{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--ochre-deep);margin-bottom:8px}
+.doc-head h1{font-family:'Spectral',serif;font-weight:500;font-size:clamp(27px,4.4vw,40px);line-height:1.05;color:var(--ink)}
+.doc-head .prepared{font-size:11px;color:var(--stone);margin-top:9px;font-style:italic}
+.doc-head .prepared input{font-family:inherit;font-size:inherit;font-style:italic;color:var(--ink-2);border:none;background:transparent;text-align:center;width:175px}
+.doc-head .prepared input:focus{outline:none;box-shadow:0 1px 0 var(--ochre)}
+
+.tabs{display:flex;justify-content:center;gap:6px;margin-bottom:26px;flex-wrap:wrap}
+.tabs button{font-family:'Inter',sans-serif;font-size:12px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--stone);background:var(--paper);border:1px solid var(--line);padding:10px 18px;border-radius:3px;cursor:pointer;transition:.2s;display:flex;align-items:center;gap:8px}
+.tabs button .stepnum{font-family:'Spectral',serif;font-style:italic;color:var(--ochre-deep);font-size:13px}
+.tabs button.on{background:var(--ink);color:var(--cream);border-color:var(--ink)}
+.tabs button.on .stepnum{color:var(--ochre)}
+
+.page{display:none}
+.page.on{display:block}
+.form-col{max-width:600px;margin:0 auto}
+
+.snap{display:flex;gap:16px;align-items:center;background:var(--paper);border:1px solid var(--line);border-left:3px solid var(--ochre);border-radius:4px;padding:14px 16px;margin-bottom:24px}
+.snap .photo{width:88px;height:88px;border-radius:3px;object-fit:cover;flex-shrink:0;background:var(--line-soft);border:1px solid var(--line)}
+.snap .photo-ph{width:88px;height:88px;border-radius:3px;background:var(--line-soft);border:1px dashed var(--stone-soft);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:9.5px;color:var(--stone-soft);text-align:center;padding:4px}
+.snap .info{min-width:0}
+.snap .addr{font-family:'Spectral',serif;font-weight:500;font-size:18px;color:var(--ink);line-height:1.2}
+.snap .addr.empty{color:var(--stone-soft);font-style:italic;font-size:13.5px;font-family:'Inter',sans-serif}
+.snap .meta{font-size:11.5px;color:var(--stone);margin-top:4px;letter-spacing:.04em;text-transform:uppercase}
+
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:start}
+@media(max-width:840px){.grid{grid-template-columns:1fr;gap:26px}}
+
+.group{margin-bottom:22px}
+.group:last-child{margin-bottom:0}
+.eyebrow{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--ochre-deep);padding-bottom:10px;margin-bottom:14px;border-bottom:1px solid var(--line)}
+.fld{margin-bottom:13px}
+.fld:last-child{margin-bottom:0}
+.fld.two{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.fld.three{display:grid;grid-template-columns:1fr 1fr 1fr;gap:13px}
+.fld label{display:block;font-size:11.5px;color:var(--stone);margin-bottom:6px}
+.fld .hint{color:var(--ochre-deep);font-size:10.5px;opacity:.85}
+.ip{position:relative;display:flex;align-items:center}
+.ip .pre,.ip .post{position:absolute;font-size:14px;color:var(--stone-soft);pointer-events:none}
+.ip .pre{left:13px}.ip .post{right:13px}
+.ip input{width:100%;font-family:'Inter',sans-serif;font-size:14.5px;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:11px 13px;font-variant-numeric:tabular-nums;transition:.18s}
+.ip input.pre-pad{padding-left:26px}
+.ip input.post-pad{padding-right:30px}
+.ip input:focus{outline:none;border-color:var(--ochre);box-shadow:0 0 0 3px rgba(78,115,150,.15)}
+.ip input::-webkit-outer-spin-button,.ip input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.ip input[type=number]{-moz-appearance:textfield}
+.readout{font-size:11px;color:var(--ink-2);margin-top:5px;min-height:14px}
+
+.upload{border:1.5px dashed var(--line);border-radius:5px;padding:30px 20px;text-align:center;cursor:pointer;transition:.2s;background:var(--paper);display:block}
+.upload:hover{border-color:var(--ochre)}
+.upload.has-img{padding:0;border-style:solid;overflow:hidden}
+.upload img{width:100%;max-height:260px;object-fit:cover;display:block}
+.upload .ph-icon{font-size:24px;color:var(--stone-soft);margin-bottom:8px}
+.upload .ph-text{font-size:12.5px;color:var(--stone)}
+.upload .ph-text b{color:var(--ochre-deep)}
+.upload input[type=file]{display:none}
+.upload-actions{display:flex;justify-content:center;gap:10px;margin-top:10px}
+.upload-actions button{font-family:'Inter',sans-serif;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);background:transparent;border:1px solid var(--line);border-radius:3px;padding:7px 16px;cursor:pointer}
+.upload-actions button:hover{border-color:var(--ochre)}
+
+.result{background:var(--paper);border-radius:5px;border:1px solid var(--line);border-top:2px solid var(--ochre);padding:28px 26px 24px}
+.proceeds-lab{text-align:center;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--stone)}
+.proceeds-val{text-align:center;font-family:'Spectral',serif;font-weight:600;font-size:clamp(44px,8.6vw,58px);line-height:1;color:var(--ink);margin:10px 0 8px}
+.proceeds-val.neg{color:var(--rust)}
+.proceeds-sub{text-align:center;font-size:12px;color:var(--stone);padding-bottom:20px;border-bottom:1px solid var(--line-soft)}
+.proceeds-sub b{color:var(--ink-2);font-weight:500}
+
+.ledger{margin-top:18px}
+.ledger .lr{display:flex;justify-content:space-between;align-items:baseline;padding:7px 0;font-size:13.5px}
+.ledger .lr.muted .lbl,.ledger .lr.muted .amt{color:var(--stone)}
+.ledger .lr.sub{border-top:1px solid var(--line);margin-top:6px;padding-top:11px}
+.ledger .lr.sub .lbl,.ledger .lr.sub .amt{font-weight:500}
+.ledger .lr.pct .pp{color:var(--ochre-deep);font-size:11px;margin-left:7px}
+.ledger .lr.final{margin-top:8px;padding:13px 14px;background:var(--ink);border-radius:5px}
+.ledger .lr.final .lbl{font-family:'Spectral',serif;font-size:18px;color:var(--cream)}
+.ledger .lr.final .amt{font-family:'Spectral',serif;font-size:23px;font-weight:600;color:#fff}
+.ledger .lr.final.neg .amt{color:#E8978E}
+
+.cmp-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:480px){.cmp-grid{grid-template-columns:1fr}}
+.ccard{border:1px solid var(--line);border-radius:5px;padding:18px 16px;text-align:center}
+.ccard.best{border-color:var(--ochre);background:var(--paper-2)}
+.ccard .cprice{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--stone)}
+.ccard .cprice b{display:block;font-family:'Spectral',serif;font-size:22px;font-weight:600;color:var(--ink);letter-spacing:0;text-transform:none;margin-top:3px}
+.ccard .cnet-lab{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--stone);margin-top:16px}
+.ccard .cnet{font-family:'Spectral',serif;font-size:32px;font-weight:600;color:var(--ink);line-height:1.05;margin-top:2px}
+.ccard .cnet.neg{color:var(--rust)}
+.ccard .ccost{font-size:11px;color:var(--stone);margin-top:6px}
+.cdiff{margin-top:16px;text-align:center;font-size:13px;color:var(--body);background:var(--paper-2);border:1px solid var(--line);border-radius:5px;padding:12px}
+.cdiff b{font-family:'Spectral',serif;font-size:17px;color:var(--ink)}
+
+.pagenav{display:flex;justify-content:flex-end;margin-top:26px}
+.pagenav button{font-family:'Inter',sans-serif;font-size:12px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:#fff;background:var(--ink);border:1px solid var(--ink);border-radius:3px;padding:12px 28px;cursor:pointer;transition:.2s}
+.pagenav button:hover{background:var(--ochre-deep);border-color:var(--ochre-deep)}
+
+.actions{text-align:center;margin-top:22px}
+.dl{font-family:'Inter',sans-serif;font-size:12px;font-weight:500;letter-spacing:.13em;text-transform:uppercase;color:var(--ink);background:transparent;border:1px solid var(--ochre);border-radius:3px;padding:12px 32px;cursor:pointer;transition:.2s}
+.dl:hover{background:var(--ink);color:var(--cream);border-color:var(--ink)}
+
+.fine{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);text-align:center}
+.fine .tag{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ochre-deep);margin-bottom:9px}
+.fine p{font-size:11px;line-height:1.65;color:var(--stone);max-width:74ch;margin:0 auto}
+
+@media print{
+  @page{margin:11mm 14mm}
+  body{background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact;font-size:13px}
+  .sheet{padding:0;max-width:100%;animation:none}
+  .tabs,.pagenav,.actions{display:none!important}
+  .grid{display:block}
+  .grid > section:not(.result){display:none!important}
+  .result{box-shadow:none;padding:18px 20px 16px}
+  .masthead{padding:14px 22px}
+  .mast-mono{width:28px;height:28px;margin-bottom:7px}
+  .subhead{padding-top:14px}
+  .agent-name{font-size:21px}
+  .doc-head{margin:14px 0 12px;padding-top:14px}
+  .doc-head h1{font-size:24px}
+  .snap{margin-bottom:16px;padding:12px 14px}
+  .snap .photo,.snap .photo-ph{width:66px;height:66px}
+  .snap .addr{font-size:15px}
+  .proceeds-val{font-size:38px;margin:6px 0 5px}
+  .ledger .lr{padding:4px 0;font-size:12.5px}
+  .ledger .lr.final{padding:10px 12px}
+  .ledger .lr.final .amt{font-size:19px}
+  .fine{margin-top:14px;padding-top:10px}
+  .fine p{font-size:9.5px}
+}
+</style>
+</head>
+<body data-page="property">
+<div class="sheet">
+
+  <div class="masthead">
+    <div class="mast-mono"><span id="crest">CH</span></div>
+    <div class="mast-name" id="brokerage">Evergreen &amp; Grace Realty</div>
+  </div>
+
+  <div class="subhead">
+    <div class="agent-name" id="agentName">Cameron Hayes</div>
+    <div class="agent-line">REALTOR®<span class="dot">·</span>Lic# 000000<span class="dot">·</span>(919) 555-0142<span class="dot">·</span>cameron@evergreenandgrace.co</div>
+  </div>
+
+  <div class="doc-head">
+    <div class="ribbon">Prepared for your review</div>
+    <h1>Seller's Net Proceeds Estimate</h1>
+    <div class="prepared">Prepared <input id="prepDate" value="" aria-label="Date"></div>
+  </div>
+
+  <div class="tabs">
+    <button id="t-property" class="on" onclick="setPage('property')"><span class="stepnum">i</span>Property</button>
+    <button id="t-single" onclick="setPage('single')"><span class="stepnum">ii</span>Single Estimate</button>
+    <button id="t-compare" onclick="setPage('compare')"><span class="stepnum">iii</span>Compare Two Prices</button>
+  </div>
+
+  <!-- PAGE 1: PROPERTY -->
+  <div class="page on" id="page-property">
+    <div class="form-col">
+      <div class="group">
+        <div class="eyebrow">Listing Photo</div>
+        <label class="upload" id="uploadBox" for="photoInput">
+          <input type="file" id="photoInput" accept="image/*" onchange="handlePhoto(event)">
+          <div id="uploadInner">
+            <div class="ph-icon">＋</div>
+            <div class="ph-text"><b>Add a listing photo</b><br>JPG or PNG, included in the downloaded report</div>
+          </div>
+        </label>
+        <div class="upload-actions" id="uploadActions" style="display:none">
+          <button type="button" onclick="document.getElementById('photoInput').click()">Replace</button>
+          <button type="button" onclick="removePhoto()">Remove</button>
+        </div>
+      </div>
+      <div class="group">
+        <div class="eyebrow">Property Details</div>
+        <div class="fld"><label>Street Address</label><div class="ip"><input type="text" id="street" placeholder="123 Hawthorne Lane" oninput="onPropertyChange()"></div></div>
+        <div class="fld two">
+          <div><label>City, State</label><div class="ip"><input type="text" id="cityState" placeholder="Cary, NC" oninput="onPropertyChange()"></div></div>
+          <div><label>ZIP</label><div class="ip"><input type="text" id="zip" placeholder="27518" oninput="onPropertyChange()"></div></div>
+        </div>
+        <div class="fld three">
+          <div><label>Beds</label><div class="ip"><input type="number" id="beds" placeholder="4" oninput="onPropertyChange()"></div></div>
+          <div><label>Baths</label><div class="ip"><input type="number" id="baths" placeholder="2.5" step="0.5" oninput="onPropertyChange()"></div></div>
+          <div><label>Sq Ft</label><div class="ip"><input type="number" id="sqft" placeholder="2400" oninput="onPropertyChange()"></div></div>
+        </div>
+      </div>
+      <div class="pagenav"><button onclick="setPage('single')">Continue to Estimate →</button></div>
+    </div>
+  </div>
+
+  <!-- PAGE 2: SINGLE -->
+  <div class="page" id="page-single">
+    <div class="snap" id="snapSingle"></div>
+    <div class="grid">
+      <section>
+        <div class="group">
+          <div class="eyebrow">The Sale</div>
+          <div class="fld"><label>Expected Sale Price</label><div class="ip"><span class="pre">$</span><input type="number" id="salePrice" class="pre-pad" value="385000" oninput="calc()"></div></div>
+        </div>
+        <div class="group">
+          <div class="eyebrow">Commission</div>
+          <div class="fld"><label>Listing Commission</label><div class="ip"><input type="number" id="listingPct" class="post-pad" step="0.05" value="2.75" oninput="calc()"><span class="post">%</span></div><div class="readout" id="listingRead"></div></div>
+          <div class="fld"><label>Buyer-Agent Commission <span class="hint">(negotiated separately since the 2024 settlement)</span></label><div class="ip"><input type="number" id="buyerPct" class="post-pad" step="0.05" value="2.5" oninput="calc()"><span class="post">%</span></div><div class="readout" id="buyerRead"></div></div>
+        </div>
+        <div class="group">
+          <div class="eyebrow">Costs &amp; Credits</div>
+          <div class="fld"><label>Seller Concessions / Buyer Credits</label><div class="ip"><span class="pre">$</span><input type="number" id="concessions" class="pre-pad" value="3000" oninput="calc()"></div></div>
+          <div class="fld"><label>Excise / Transfer Tax <span class="hint">(NC: $2 per $1,000)</span></label><div class="ip"><input type="number" id="excisePct" class="post-pad" step="0.01" value="0.2" oninput="calc()"><span class="post">%</span></div><div class="readout" id="exciseRead"></div></div>
+          <div class="fld two">
+            <div><label>Owner's Title <span class="hint">(buyer's in NC)</span></label><div class="ip"><span class="pre">$</span><input type="number" id="titleIns" class="pre-pad" value="0" oninput="calc()"></div></div>
+            <div><label>Closing Attorney Fee</label><div class="ip"><span class="pre">$</span><input type="number" id="attorney" class="pre-pad" value="500" oninput="calc()"></div></div>
+          </div>
+          <div class="fld two">
+            <div><label>Prorated Property Taxes</label><div class="ip"><span class="pre">$</span><input type="number" id="proratedTax" class="pre-pad" value="1400" oninput="calc()"></div></div>
+            <div><label>Prorated HOA Dues</label><div class="ip"><span class="pre">$</span><input type="number" id="proratedHOA" class="pre-pad" value="0" oninput="calc()"></div></div>
+          </div>
+          <div class="fld two">
+            <div><label>Home Warranty</label><div class="ip"><span class="pre">$</span><input type="number" id="warranty" class="pre-pad" value="550" oninput="calc()"></div></div>
+            <div><label>Recording Fees</label><div class="ip"><span class="pre">$</span><input type="number" id="recording" class="pre-pad" value="50" oninput="calc()"></div></div>
+          </div>
+          <div class="fld"><label>Repairs / Other Credits</label><div class="ip"><span class="pre">$</span><input type="number" id="repairs" class="pre-pad" value="0" oninput="calc()"></div></div>
+        </div>
+        <div class="group">
+          <div class="eyebrow">Payoff</div>
+          <div class="fld"><label>Mortgage Payoff <span class="hint">(balance plus per-diem interest)</span></label><div class="ip"><span class="pre">$</span><input type="number" id="payoff" class="pre-pad" value="208000" oninput="calc()"></div></div>
+        </div>
+      </section>
+      <section class="result" id="result"></section>
+    </div>
+    <div class="actions"><button class="dl" onclick="downloadPDF()">Download as PDF</button></div>
+  </div>
+
+  <!-- PAGE 3: COMPARE -->
+  <div class="page" id="page-compare">
+    <div class="snap" id="snapCompare"></div>
+    <div class="grid">
+      <section>
+        <div class="group">
+          <div class="eyebrow">Two List Prices</div>
+          <div class="fld two">
+            <div><label>List Price A</label><div class="ip"><span class="pre">$</span><input type="number" id="priceA" class="pre-pad" value="385000" oninput="calc()"></div></div>
+            <div><label>List Price B</label><div class="ip"><span class="pre">$</span><input type="number" id="priceB" class="pre-pad" value="369000" oninput="calc()"></div></div>
+          </div>
+        </div>
+        <div class="group">
+          <div class="eyebrow">Commission</div>
+          <div class="fld"><label>Listing Commission</label><div class="ip"><input type="number" id="listingPctC" class="post-pad" step="0.05" value="2.75" oninput="calc()"><span class="post">%</span></div></div>
+          <div class="fld"><label>Buyer-Agent Commission</label><div class="ip"><input type="number" id="buyerPctC" class="post-pad" step="0.05" value="2.5" oninput="calc()"><span class="post">%</span></div></div>
+        </div>
+        <div class="group">
+          <div class="eyebrow">Costs &amp; Credits</div>
+          <div class="fld"><label>Seller Concessions / Buyer Credits</label><div class="ip"><span class="pre">$</span><input type="number" id="concessionsC" class="pre-pad" value="3000" oninput="calc()"></div></div>
+          <div class="fld"><label>Excise / Transfer Tax</label><div class="ip"><input type="number" id="excisePctC" class="post-pad" step="0.01" value="0.2" oninput="calc()"><span class="post">%</span></div></div>
+          <div class="fld two">
+            <div><label>Title + Attorney</label><div class="ip"><span class="pre">$</span><input type="number" id="titleAttorneyC" class="pre-pad" value="500" oninput="calc()"></div></div>
+            <div><label>Taxes + HOA Proration</label><div class="ip"><span class="pre">$</span><input type="number" id="proratedC" class="pre-pad" value="1400" oninput="calc()"></div></div>
+          </div>
+          <div class="fld two">
+            <div><label>Warranty + Recording</label><div class="ip"><span class="pre">$</span><input type="number" id="miscC" class="pre-pad" value="600" oninput="calc()"></div></div>
+            <div><label>Repairs / Other</label><div class="ip"><span class="pre">$</span><input type="number" id="repairsC" class="pre-pad" value="0" oninput="calc()"></div></div>
+          </div>
+        </div>
+        <div class="group">
+          <div class="eyebrow">Payoff</div>
+          <div class="fld"><label>Mortgage Payoff</label><div class="ip"><span class="pre">$</span><input type="number" id="payoffC" class="pre-pad" value="208000" oninput="calc()"></div></div>
+        </div>
+      </section>
+      <section class="result" id="resultCompare"></section>
+    </div>
+    <div class="actions"><button class="dl" onclick="downloadPDF()">Download as PDF</button></div>
+  </div>
+
+  <div class="fine">
+    <div class="tag">Sample · Demonstration only</div>
+    <p>This is a sample marketing piece prepared for demonstration. The agent details shown are illustrative placeholders. This estimate is not a closing disclosure, settlement statement, or guarantee of proceeds. Actual costs vary by state, county, lender, title company, and final contract terms, and they change over time. This is not legal, tax, or financial advice. Consult your closing attorney or a licensed tax professional before relying on any figure.</p>
+  </div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const val=id=>parseFloat($(id).value)||0;
+const usd=n=>(n<0?"-$":"$")+Math.abs(Math.round(n)).toLocaleString();
+const pct1=n=>Number(n).toFixed(2).replace(/\.?0+$/,'')+"%";
+const pct=n=>n.toFixed(1)+"%";
+let photoData=null;
+let page='property';
+
+function setPage(p){
+  page=p;
+  document.body.dataset.page=p;
+  ['property','single','compare'].forEach(k=>{
+    $('page-'+k).classList.toggle('on',k===p);
+    $('t-'+k).classList.toggle('on',k===p);
+  });
+  renderSnap();
+  calc();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function propertySummary(){
+  const street=$('street').value.trim();
+  const cityState=$('cityState').value.trim();
+  const zip=$('zip').value.trim();
+  const beds=$('beds').value, baths=$('baths').value, sqft=$('sqft').value;
+  const addrLine=[street,[cityState,zip].filter(Boolean).join(' ')].filter(Boolean).join(', ');
+  const metaParts=[];
+  if(beds) metaParts.push(beds+' Bed');
+  if(baths) metaParts.push(baths+' Bath');
+  if(sqft) metaParts.push(Number(sqft).toLocaleString()+' Sq Ft');
+  return {addrLine, meta: metaParts.join('  ·  '), hasAny: !!(street||cityState||zip||beds||baths||sqft)};
+}
+
+function renderSnap(){
+  if(page!=='single' && page!=='compare') return;
+  const target = page==='single' ? $('snapSingle') : $('snapCompare');
+  const p=propertySummary();
+  const photoHTML = photoData ? `<img class="photo" src="${photoData}" alt="Listing photo">` : `<div class="photo-ph">No photo<br>added</div>`;
+  const addrHTML = p.addrLine ? `<div class="addr">${p.addrLine}</div><div class="meta">${p.meta}</div>` : `<div class="addr empty">No property info entered yet — add it on the Property tab</div>`;
+  target.innerHTML = `${photoHTML}<div class="info">${addrHTML}</div>`;
+}
+function onPropertyChange(){ renderSnap(); }
+
+function handlePhoto(e){
+  const file=e.target.files[0];
+  if(!file) return;
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    photoData=ev.target.result;
+    $('uploadInner').innerHTML=`<img src="${photoData}" alt="Listing photo preview">`;
+    $('uploadBox').classList.add('has-img');
+    $('uploadActions').style.display='flex';
+    renderSnap();
+  };
+  reader.readAsDataURL(file);
+}
+function removePhoto(){
+  photoData=null; $('photoInput').value='';
+  $('uploadBox').classList.remove('has-img');
+  $('uploadInner').innerHTML=`<div class="ph-icon">＋</div><div class="ph-text"><b>Add a listing photo</b><br>JPG or PNG, included in the downloaded report</div>`;
+  $('uploadActions').style.display='none';
+  renderSnap();
+}
+
+function calcFor(price,ids){
+  const listing=price*val(ids.listingPct)/100;
+  const buyer=price*val(ids.buyerPct)/100;
+  const excise=price*val(ids.excisePct)/100;
+  let items;
+  if(ids.detailed){
+    items=[
+      ['Listing commission ('+pct1(val(ids.listingPct))+')',listing],
+      ['Buyer-agent commission ('+pct1(val(ids.buyerPct))+')',buyer],
+      ['Seller concessions / credits',val(ids.concessions)],
+      ['Excise / transfer tax',excise],
+      ["Owner's title insurance",val(ids.titleIns)],
+      ['Closing attorney fee',val(ids.attorney)],
+      ['Prorated property taxes',val(ids.proratedTax)],
+      ['Prorated HOA dues',val(ids.proratedHOA)],
+      ['Home warranty',val(ids.warranty)],
+      ['Recording fees',val(ids.recording)],
+      ['Repairs / other credits',val(ids.repairs)]
+    ];
+  } else {
+    items=[
+      ['Listing commission ('+pct1(val(ids.listingPct))+')',listing],
+      ['Buyer-agent commission ('+pct1(val(ids.buyerPct))+')',buyer],
+      ['Seller concessions / credits',val(ids.concessions)],
+      ['Excise / transfer tax',excise],
+      ['Title + attorney',val(ids.titleAttorney)],
+      ['Taxes + HOA proration',val(ids.prorated)],
+      ['Warranty + recording',val(ids.misc)],
+      ['Repairs / other',val(ids.repairs)]
+    ];
+  }
+  const costOfSale=items.reduce((s,i)=>s+i[1],0);
+  const payoff=val(ids.payoff);
+  const net=price-costOfSale-payoff;
+  const costPct=price?costOfSale/price*100:0;
+  return {price,items,costOfSale,payoff,net,costPct};
+}
+
+function renderSingle(r){
+  const rows=r.items.filter(i=>i[1]>0).map(i=>`<div class="lr muted"><span class="lbl">${i[0]}</span><span class="amt">- ${usd(i[1])}</span></div>`).join('');
+  $('result').innerHTML=`
+    <div class="proceeds-lab">Estimated Net Proceeds</div>
+    <div class="proceeds-val ${r.net<0?'neg':''}">${usd(r.net)}</div>
+    <div class="proceeds-sub">After <b>${usd(r.costOfSale)}</b> in selling costs (${pct(r.costPct)}) and <b>${usd(r.payoff)}</b> payoff</div>
+    <div class="ledger">
+      <div class="lr"><span class="lbl">Sale price</span><span class="amt">${usd(r.price)}</span></div>
+      ${rows}
+      <div class="lr sub pct"><span class="lbl">Total cost of sale<span class="pp">${pct(r.costPct)} of price</span></span><span class="amt">- ${usd(r.costOfSale)}</span></div>
+      <div class="lr"><span class="lbl">Mortgage payoff</span><span class="amt">- ${usd(r.payoff)}</span></div>
+      <div class="lr final ${r.net<0?'neg':''}"><span class="lbl">Estimated net proceeds</span><span class="amt">${usd(r.net)}</span></div>
+    </div>`;
+}
+
+function renderCompare(a,b){
+  const aBest=a.net>=b.net;
+  const diff=Math.abs(a.net-b.net);
+  $('resultCompare').innerHTML=`
+    <div class="proceeds-lab" style="margin-bottom:18px">Net Proceeds at Two List Prices</div>
+    <div class="cmp-grid">
+      <div class="ccard ${aBest?'best':''}">
+        <div class="cprice">List Price A<b>${usd(a.price)}</b></div>
+        <div class="cnet-lab">Net proceeds</div>
+        <div class="cnet ${a.net<0?'neg':''}">${usd(a.net)}</div>
+        <div class="ccost">${pct(a.costPct)} cost of sale</div>
+      </div>
+      <div class="ccard ${!aBest?'best':''}">
+        <div class="cprice">List Price B<b>${usd(b.price)}</b></div>
+        <div class="cnet-lab">Net proceeds</div>
+        <div class="cnet ${b.net<0?'neg':''}">${usd(b.net)}</div>
+        <div class="ccost">${pct(b.costPct)} cost of sale</div>
+      </div>
+    </div>
+    <div class="cdiff">Listing at the higher price (${aBest?'A':'B'}) nets <b>${usd(diff)}</b> more.</div>`;
+}
+
+function calc(){
+  if(page==='single'){
+    const sp=val('salePrice');
+    $('listingRead').textContent = sp? '= '+usd(sp*val('listingPct')/100):'';
+    $('buyerRead').textContent = sp? '= '+usd(sp*val('buyerPct')/100):'';
+    $('exciseRead').textContent = sp? '= '+usd(sp*val('excisePct')/100):'';
+    renderSingle(calcFor(sp,{detailed:true,listingPct:'listingPct',buyerPct:'buyerPct',concessions:'concessions',excisePct:'excisePct',titleIns:'titleIns',attorney:'attorney',proratedTax:'proratedTax',proratedHOA:'proratedHOA',warranty:'warranty',recording:'recording',repairs:'repairs',payoff:'payoff'}));
+  } else if(page==='compare'){
+    const ids={detailed:false,listingPct:'listingPctC',buyerPct:'buyerPctC',concessions:'concessionsC',excisePct:'excisePctC',titleAttorney:'titleAttorneyC',prorated:'proratedC',misc:'miscC',repairs:'repairsC',payoff:'payoffC'};
+    renderCompare(calcFor(val('priceA'),ids),calcFor(val('priceB'),ids));
+  }
+}
+
+function slug(s){ return s.toString().trim().replace(/[^\w\s-]/g,'').replace(/\s+/g,'-').replace(/-+/g,'-').slice(0,40) || 'Property'; }
+
+function downloadPDF(){
+  const p=propertySummary();
+  const base = p.addrLine ? slug(p.addrLine.split(',')[0]) : 'Sample-Property';
+  const kind = page==='compare' ? 'Compare' : 'Net-Sheet';
+  document.title = `${kind}-${base}`;
+  window.print();
+}
+
+$('prepDate').value=new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+renderSnap();
+calc();
+</script>
+</body>
+</html>
