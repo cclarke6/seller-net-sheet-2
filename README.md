@@ -12,9 +12,6 @@ The seller enters the sale price, mortgage payoff, commission, and closing costs
 - Works on phones, tablets, and desktops on current browsers
 - Property photo upload and address-based PDF filename
 
-## Live App
-https://cclarke6.github.io/seller-net-sheet-2/
-
 ## Disclaimer
 This tool provides estimates for demonstration and planning purposes only. It is not a guarantee of final closing figures. Actual costs vary by transaction, lender, and jurisdiction.
 
